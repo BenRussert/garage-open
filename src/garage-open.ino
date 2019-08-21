@@ -2,8 +2,7 @@ unsigned long duration;
 unsigned long THRESHOLD;
 bool isOpen;
 bool wasOpen;
-// String status;
-// String previousStatus;
+
 inline const char *const boolToString(bool b)
 {
   return b ? "true" : "false";
@@ -13,8 +12,8 @@ void publishStatus(bool shouldPublish)
 {
   if (shouldPublish)
   {
-    // Particle.publish("GARAGE_IS_OPEN", boolToString(isOpen), 60, PRIVATE);
-    Particle.publish("GARAGE_IS_OPEN", String(duration), 60, PRIVATE);
+    Particle.publish("GARAGE_IS_OPEN", boolToString(isOpen), 60, PRIVATE);
+    Particle.publish("GARAGE_DISTANCE", String(duration), 60, PRIVATE);
   };
   // reset after publish, but before new measurement
   wasOpen = isOpen;
@@ -34,15 +33,14 @@ bool checkIfOpen(unsigned long threshold = THRESHOLD)
 void setup()
 {
 
-  // ultrasonic range finder Robotshop RB-lte-54
-
   // GND pin goes to ground
+  // VCC pin goes to VIN on the photon
+
   pinMode(D6, INPUT);  // echo / yellow
   pinMode(D2, OUTPUT); // Trig / orange
-  // VCC pin goes to VIN on the photon
   Particle.variable("isOpen", isOpen);
   Particle.variable("duration", duration);
-  THRESHOLD = 2000;
+  THRESHOLD = 1000;
   isOpen = checkIfOpen();
   publishStatus(true);
 }
@@ -54,12 +52,10 @@ void loop()
   if (checkIfOpen())
   {
     isOpen = true;
-    digitalWrite(D7, HIGH);
   }
   else
   {
     isOpen = false;
-    digitalWrite(D7, LOW);
   }
   publishStatus(wasOpen != isOpen);
 }
