@@ -35,6 +35,7 @@ void setup()
   // GND pin goes to ground
   // VCC pin goes to VIN on the photon
 
+  pinMode(D7, OUTPUT); // LED on D7
   pinMode(D6, INPUT);  // echo / yellow
   pinMode(D2, OUTPUT); // Trig / orange
   Particle.variable("isOpen", isOpen);
@@ -51,10 +52,12 @@ void loop()
   if (checkIfOpen())
   {
     isOpen = true;
+    digitalWrite(D7, HIGH);
   }
   else
   {
     isOpen = false;
+    digitalWrite(D7, LOW);
   }
   publishStatus(wasOpen != isOpen);
 }
