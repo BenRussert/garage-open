@@ -16,7 +16,7 @@ void setup()
   // For LED
   pinMode(D4, OUTPUT);
 
-  THRESHOLD = 1500;
+  THRESHOLD = 2000;
   isOpen = false;
   status = "Loading";
   Particle.variable("duration", duration);
