@@ -40,10 +40,6 @@ void setup()
   pinMode(D6, INPUT);  // echo / yellow
   pinMode(D2, OUTPUT); // Trig / orange
   // VCC pin goes to VIN on the photon
-  pinMode(D7, OUTPUT);
-  // For LED
-  // pinMode(D4, OUTPUT);
-  duration = pulseIn(D6, HIGH); // how long until a reply?
   Particle.variable("isOpen", isOpen);
   Particle.variable("duration", duration);
   THRESHOLD = 2000;
@@ -58,12 +54,12 @@ void loop()
   if (checkIfOpen())
   {
     isOpen = true;
-    // digitalWrite(D2, HIGH); // activate trigger
+    digitalWrite(D7, HIGH);
   }
   else
   {
     isOpen = false;
-    // digitalWrite(D2, LOW); // activate trigger
+    digitalWrite(D7, LOW);
   }
   publishStatus(wasOpen != isOpen);
 }
