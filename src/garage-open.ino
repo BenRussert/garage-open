@@ -12,7 +12,7 @@ void publishStatus(bool shouldPublish)
 {
   if (shouldPublish)
   {
-    Particle.publish("isOpen", boolToString(isOpen), 60, PRIVATE);
+    Particle.publish("GARAGE_IS_OPEN", boolToString(isOpen), 60, PRIVATE);
   };
   // reset after publish, but before new measurement
   wasOpen = isOpen;
